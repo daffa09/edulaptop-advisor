@@ -122,3 +122,41 @@ EduLaptop-Advisor/
   "rekomendasi": "ASUS Vivobook 15 / Lenovo IdeaPad Slim 3 / HP 14"
 }
 ```
+
+## POST /feedback
+
+### Request Body
+```php
+{
+  "jurusan": "informatika",
+  "aktivitas": "coding",
+  "budget": 9000000,
+  "rekomendasi": "ASUS Vivobook 15 / Lenovo IdeaPad Slim 3 / HP 14",
+  "feedback": "sesuai"
+}
+```
+
+## Response
+```php
+{
+  "status": "success",
+  "message": "Feedback diterima dan disimpan ke learning_data.json"
+}
+```
+
+
+### Catatan:
+1. Nilai feedback dapat berupa "sesuai" atau "tidak_sesuai".
+2. Sistem akan memantau kombinasi yang sering mendapat feedback positif.
+3. Jika pola tertentu muncul berulang kali, sistem otomatis menambah aturan baru agar inferensi berikutnya lebih relevan.
+
+
+### 🧬 Mekanisme Learning Agent
+1. Sistem menyimpan setiap kombinasi fakta + hasil rekomendasi + feedback pengguna.
+2. Jika pola tertentu (misal: “jurusan desain + aktivitas editing + budget tinggi”) sering mendapat feedback positif, maka:
+```php
+IF jurusan_desain AND aktivitas_editing AND budget_high → rekomendasi_macbook_air_m2
+```
+akan otomatis ditambahkan ke basis pengetahuan.
+
+3. Dengan ini, sistem belajar secara adaptif, sehingga rekomendasi berikutnya semakin sesuai dengan preferensi pengguna.
