@@ -13,17 +13,23 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const res = await fetch("http://localhost:5000/recommend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, budget: Number(form.budget) }),
-    });
-    const data = await res.json();
-    setResult(data);
-    setLoading(false);
+    try {
+      const res = await fetch("http://localhost:5000/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, budget: Number(form.budget) }),
+      });
+      const data = await res.json();
+      console.log(data);
+      setResult(data);
+    } catch (err) {
+      console.error("Gagal fetch:", err);
+      alert("Gagal menghubungi backend.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // === Sesuai rule di app.py ===
   const jurusanOptions = [
     "Informatika",
     "Teknik Informatika",
@@ -39,12 +45,7 @@ export default function App() {
     "Psikologi",
   ];
 
-  const aktivitasOptions = [
-    "Coding",
-    "Desain",
-    "Gaming",
-    "Office / Mengetik",
-  ];
+  const aktivitasOptions = ["Coding", "Desain", "Gaming", "Office"];
 
   const budgetOptions = [
     { label: "≤ 7 juta", value: 7000000 },
@@ -134,6 +135,7 @@ export default function App() {
           </button>
         </form>
 
+        {/* Result */}
         {result && (
           <div className="mt-6 bg-gradient-to-b from-gray-800 to-gray-900 border border-gray-700 rounded-xl p-5 shadow-lg shadow-blue-900/30 animate-fadeIn">
             <h2 className="text-xl font-bold text-blue-400 mb-2">
@@ -142,26 +144,31 @@ export default function App() {
             <p className="text-gray-200 mb-4 italic">{result.rekomendasi}</p>
 
             <h3 className="font-semibold text-blue-400 mb-2">
-              🔍 Aturan yang Digunakan:
+              🔍 Fakta Awal:
             </h3>
             <ul className="list-disc list-inside text-gray-300 space-y-1">
-              {result.rules_terpakai.map((r, i) => (
-                <li key={i}>{r}</li>
+              {result.input_fakta_awal.map((f, i) => (
+                <li key={i}>{f}</li>
               ))}
             </ul>
 
-            {result.spesifikasi_dianjurkan?.length > 0 && (
-              <>
-                <h3 className="font-semibold text-blue-400 mt-3 mb-1">
-                  ⚙️ Spesifikasi yang Dianjurkan:
-                </h3>
-                <ul className="list-disc list-inside text-gray-300 space-y-1">
-                  {result.spesifikasi_dianjurkan.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <h3 className="font-semibold text-blue-400 mt-3 mb-2">
+              🧠 Fakta Akhir:
+            </h3>
+            <ul className="list-disc list-inside text-gray-300 space-y-1">
+              {result.fakta_akhir.map((f, i) => (
+                <li key={i}>{f}</li>
+              ))}
+            </ul>
+
+            <h3 className="font-semibold text-blue-400 mt-3 mb-2">
+              ⚙️ Log Inferensi:
+            </h3>
+            <ul className="list-disc list-inside text-gray-300 space-y-1">
+              {result.log_inferensi.map((l, i) => (
+                <li key={i}>{l}</li>
+              ))}
+            </ul>
           </div>
         )}
 
