@@ -101,19 +101,24 @@ EduLaptop-Advisor/
 ### Response:
 ```php
 {
-  "jurusan": "informatika",
-  "aktivitas": "coding",
-  "budget": 12000000,
-  "rules_terpakai": [
-    "Jurusan Informatika → butuh laptop dengan CPU minimal i5 dan RAM >= 8GB",
-    "Aktivitas coding → butuh CPU kuat dan RAM besar",
-    "Budget 10–15 juta → high performance student laptop"
+  "input_fakta_awal": ["jurusan_informatika", "aktivitas_coding", "budget_mid"],
+  "fakta_akhir": [
+    "jurusan_informatika",
+    "aktivitas_coding",
+    "butuh_cpu_i5",
+    "butuh_ram_8gb",
+    "butuh_ram_16gb",
+    "kategori_mid_range",
+    "rekomendasi_vivobook_lenovo_ideapad"
   ],
-  "spesifikasi_dianjurkan": [
-    "CPU minimal i5",
-    "RAM >= 8GB",
-    "CPU i5/i7 dan RAM >= 16GB"
+  "log_inferensi": [
+    "Rule diterapkan: {'jurusan_informatika'} → butuh_cpu_i5",
+    "Rule diterapkan: {'jurusan_informatika'} → butuh_ram_8gb",
+    "Rule diterapkan: {'aktivitas_coding'} → butuh_cpu_i5",
+    "Rule diterapkan: {'aktivitas_coding'} → butuh_ram_16gb",
+    "Rule diterapkan: {'budget_mid'} → kategori_mid_range",
+    "Rule diterapkan: {'kategori_mid_range'} → rekomendasi_vivobook_lenovo_ideapad"
   ],
-  "rekomendasi": "ASUS ZenBook 14 / Acer Swift X / Lenovo Yoga Slim 7"
+  "rekomendasi": "ASUS Vivobook 15 / Lenovo IdeaPad Slim 3 / HP 14"
 }
 ```
