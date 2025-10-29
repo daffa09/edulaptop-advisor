@@ -1,0 +1,27 @@
+version: "3.3"
+
+networks:
+  edulaptop_net:
+    name: edulaptop_net
+    driver: bridge
+
+services:
+  backend:
+    image: daffa09/edulaptop-backend:latest
+    container_name: edulaptop-backend
+    ports:
+      - "5000:5000"
+    networks:
+      - edulaptop_net
+    restart: always
+
+  frontend:
+    image: daffa09/edulaptop-frontend:latest
+    container_name: edulaptop-frontend
+    ports:
+      - "8200:80"
+    depends_on:
+      - backend
+    networks:
+      - edulaptop_net
+    restart: always
