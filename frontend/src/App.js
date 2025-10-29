@@ -20,7 +20,6 @@ export default function App() {
         body: JSON.stringify({ ...form, budget: Number(form.budget) }),
       });
       const data = await res.json();
-      console.log(data);
       setResult(data);
     } catch (err) {
       console.error("Gagal fetch:", err);
@@ -128,14 +127,13 @@ export default function App() {
           <button
             disabled={loading}
             className={`w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold tracking-wide transition-all transform hover:scale-[1.02] ${
-              loading ? "opacity-70 cursor-not-allowed" : ""
+              loading ? `opacity-70 cursor-not-allowed` : null
             }`}
           >
             {loading ? "Memproses..." : "💡 Dapatkan Rekomendasi"}
           </button>
         </form>
 
-        {/* Result */}
         {result && (
           <div className="mt-6 bg-gradient-to-b from-gray-800 to-gray-900 border border-gray-700 rounded-xl p-5 shadow-lg shadow-blue-900/30 animate-fadeIn">
             <h2 className="text-xl font-bold text-blue-400 mb-2">
@@ -143,27 +141,60 @@ export default function App() {
             </h2>
             <p className="text-gray-200 mb-4 italic">{result.rekomendasi}</p>
 
-            <h3 className="font-semibold text-blue-400 mb-2">
-              🔍 Fakta Awal:
-            </h3>
+            {/* Feedback Buttons */}
+            <div className="flex gap-3 mb-4">
+              <button
+                onClick={async () => {
+                  await fetch("http://localhost:5000/feedback", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      facts: result.input_fakta_awal,
+                      rekomendasi: result.rekomendasi,
+                      feedback: "positif",
+                    }),
+                  });
+                  alert("Terima kasih atas feedback positifmu! 🌟");
+                }}
+                className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-semibold transition-all"
+              >
+                👍 Cocok
+              </button>
+              <button
+                onClick={async () => {
+                  await fetch("http://localhost:5000/feedback", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      facts: result.input_fakta_awal,
+                      rekomendasi: result.rekomendasi,
+                      feedback: "negatif",
+                    }),
+                  });
+                  alert("Feedback tersimpan, sistem akan belajar dari ini. 🤖");
+                }}
+                className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-semibold transition-all"
+              >
+                👎 Kurang Cocok
+              </button>
+            </div>
+
+            {/* Fakta & Log */}
+            <h3 className="font-semibold text-blue-400 mb-2">🔍 Fakta Awal:</h3>
             <ul className="list-disc list-inside text-gray-300 space-y-1">
               {result.input_fakta_awal.map((f, i) => (
                 <li key={i}>{f}</li>
               ))}
             </ul>
 
-            <h3 className="font-semibold text-blue-400 mt-3 mb-2">
-              🧠 Fakta Akhir:
-            </h3>
+            <h3 className="font-semibold text-blue-400 mt-3 mb-2">🧠 Fakta Akhir:</h3>
             <ul className="list-disc list-inside text-gray-300 space-y-1">
               {result.fakta_akhir.map((f, i) => (
                 <li key={i}>{f}</li>
               ))}
             </ul>
 
-            <h3 className="font-semibold text-blue-400 mt-3 mb-2">
-              ⚙️ Log Inferensi:
-            </h3>
+            <h3 className="font-semibold text-blue-400 mt-3 mb-2">⚙️ Log Inferensi:</h3>
             <ul className="list-disc list-inside text-gray-300 space-y-1">
               {result.log_inferensi.map((l, i) => (
                 <li key={i}>{l}</li>
@@ -171,6 +202,7 @@ export default function App() {
             </ul>
           </div>
         )}
+
 
         <p className="text-center text-xs text-gray-500 mt-6">
           © 2025 EduLaptop Advisor • Daffa Fathan
