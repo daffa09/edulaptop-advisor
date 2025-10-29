@@ -62,6 +62,7 @@ Frontend akan berjalan di:
 http://localhost:5173
 ```
 ## 🧩 Struktur Project
+```php
 EduLaptop-Advisor/
 ├── backend/
 │   ├── app.py
@@ -75,6 +76,7 @@ EduLaptop-Advisor/
 │   └── package.json
 │
 └── README.md
+```
 
 ## 🧠 Contoh Aturan (Forward Chaining Rules)
 | Kondisi                                              | Aturan yang Digunakan            | Rekomendasi                       |
