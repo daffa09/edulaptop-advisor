@@ -1,4 +1,13 @@
+<!-- portfolio -->
+<!-- slug: edulaptop-advisor -->
+<!-- title: EduLaptop Advisor -->
+<!-- description: Aplikasi expert system sederhana berbasis forward chaining untuk rekomendasi laptop mahasiswa. -->
+<!-- image: https://github.com/user-attachments/assets/03091a47-7189-41e9-b543-7c3f9e1a5ab3 -->
+<!-- tags: python, flask, react, expert-system, forward-chaining, ai, campus-project -->
+
 # 🎓 EduLaptop Advisor
+
+<img width="865" height="708" alt="image" src="https://github.com/user-attachments/assets/03091a47-7189-41e9-b543-7c3f9e1a5ab3" />
 
 Aplikasi sederhana berbasis **Forward Chaining** yang merekomendasikan laptop terbaik untuk mahasiswa berdasarkan **jurusan**, **aktivitas utama**, dan **budget**.  
 Dibuat menggunakan **React (Frontend)** dan **Flask (Backend)**.
